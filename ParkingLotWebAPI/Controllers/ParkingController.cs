@@ -4,43 +4,67 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingLotCore;
+using ParkingLotWebAPI.Services;
 
 namespace ParkingLotWebAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Parking")]
+    [Route("api/parking")]
     public class ParkingController : Controller
     {
-        // GET: api/Parking
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ParkingService _parkingService;
+
+        public ParkingController(ParkingService parkingService)
         {
-            return new string[] { "value1", "value2" };
+            _parkingService = parkingService;
         }
 
-        // GET: api/Parking/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET: api/parking
+        [HttpGet]
+        //public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return "value";
+            return Ok();
         }
-        
-        // POST: api/Parking
-        [HttpPost]
-        public void Post([FromBody]string value)
+
+        // GET: api/parking/freeplaces
+        [HttpGet("freeplaces")]
+        public IActionResult GetFreePlaces()
         {
+            var freePlaces = _parkingService.GetNumberFreePlaces();
+            if (freePlaces == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(freePlaces);
         }
-        
-        // PUT: api/Parking/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+
+        // GET: api/parking/occupiedplaces
+        [HttpGet("occupiedplaces")]
+        public IActionResult GetOccupiedPlaces()
         {
+            var freePlaces = _parkingService.GetNumberOccupiedPlaces();
+            if (freePlaces == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(freePlaces);
         }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        // GET: api/parking/generalincome
+        [HttpGet("generalincome")]
+        public IActionResult GetGeneralIncome()
         {
+            var freePlaces = _parkingService.GetGeneralIncome();
+            if (freePlaces == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(freePlaces);
         }
     }
 }

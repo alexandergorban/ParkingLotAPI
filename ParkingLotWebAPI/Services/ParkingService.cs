@@ -8,11 +8,11 @@ namespace ParkingLotWebAPI.Services
 {
     public class ParkingService
     {
-        public CoreApp CoreApp { get; private set; }
+        private CoreApp _coreApp;
 
         public ParkingService()
         {
-            CoreApp = CoreApp.Instance;
+            _coreApp = CoreApp.Instance;
         }
 
         //Number of free places (GET)
@@ -24,7 +24,7 @@ namespace ParkingLotWebAPI.Services
         //Number of occupied places (GET)
         public string GetNumberOccupiedPlaces()
         {
-            return CoreApp.Parking.GetNumberAvailableParkingSpaces().ToString();
+            return CoreApp.Parking.GetNumberBusyParkingSpaces().ToString();
         }
 
         //General Income (GET)
