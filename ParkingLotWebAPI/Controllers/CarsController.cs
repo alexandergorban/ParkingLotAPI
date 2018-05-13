@@ -58,7 +58,7 @@ namespace ParkingLotWebAPI.Controllers
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/cars/5
         [HttpDelete("{id}")]
         public IActionResult Delete(uint id)
         {
