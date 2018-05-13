@@ -79,6 +79,7 @@ namespace ParkingLotWebAPI.Controllers
             {
                 return StatusCode(403, "The car can not be removed from the parking lot, you have a debt for parking.");
             }
+
             return NoContent();
         }
     }
