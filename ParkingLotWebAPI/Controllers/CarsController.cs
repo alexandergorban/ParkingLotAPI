@@ -36,6 +36,11 @@ namespace ParkingLotWebAPI.Controllers
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(uint id)
         {
+            if (!_carsService.IsCarExist(id))
+            {
+                return NotFound();
+            }
+
             var car = _carsService.GetCar(id);
             if (car == null)
             {
@@ -55,10 +60,18 @@ namespace ParkingLotWebAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(uint id)
         {
+            if (!_carsService.IsCarExist(id))
+            {
+                return NotFound();
+            }
 
-            return Ok();
+            if (!_carsService.DeleteCar(id))
+            {
+                return StatusCode(403, "The car can not be removed from the parking lot, you have a debt for parking.");
+            }
+            return NoContent();
         }
     }
 }

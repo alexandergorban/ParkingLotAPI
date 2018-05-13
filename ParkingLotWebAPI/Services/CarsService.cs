@@ -21,10 +21,9 @@ namespace ParkingLotWebAPI.Services
         }
 
         //Delete machine (DELETE)
-        public Car DeleteCar(Guid carId)
+        public bool DeleteCar(uint carId)
         {
-
-            return null;
+            return CoreApp.Parking.RemoveCar(carId);
         }
 
         //Add a car (POST)
@@ -32,6 +31,11 @@ namespace ParkingLotWebAPI.Services
         {
 
             return null;
+        }
+
+        public bool IsCarExist(uint carId)
+        {
+            return CoreApp.Parking.IsCarExist(carId);
         }
     }
 }
