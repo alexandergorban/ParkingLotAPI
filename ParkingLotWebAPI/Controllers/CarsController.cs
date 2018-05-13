@@ -63,7 +63,7 @@ namespace ParkingLotWebAPI.Controllers
 
             var car =_carsService.AddCar(carDto);
 
-            return CreatedAtRoute("Get", car);
+            return CreatedAtRoute("Get", new { id = car.Id }, car);
         }
 
         // DELETE: api/cars/5
