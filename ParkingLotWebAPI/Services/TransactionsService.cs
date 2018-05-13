@@ -15,7 +15,7 @@ namespace ParkingLotWebAPI.Services
             return CoreApp.ParkingService.FileReader.ReadTransactionFromFile();
         }
 
-        //Last minute transactions (GET)
+        //Last n-minutes transactions (GET)
         public IEnumerable<Transaction> GetLastTransactions(int minutes)
         {
             return CoreApp.Parking.GetLastTransactions(minutes);
