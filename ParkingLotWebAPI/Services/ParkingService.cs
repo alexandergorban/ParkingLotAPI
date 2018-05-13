@@ -8,13 +8,6 @@ namespace ParkingLotWebAPI.Services
 {
     public class ParkingService
     {
-        private CoreApp _coreApp;
-
-        public ParkingService()
-        {
-            _coreApp = CoreApp.Instance;
-        }
-
         //Number of free places (GET)
         public string GetNumberFreePlaces()
         {
