@@ -14,7 +14,7 @@ namespace ParkingLotWebAPI.Controllers
     [Route("api/cars")]
     public class CarsController : Controller
     {
-        private CarsService _carsService;
+        private readonly CarsService _carsService;
 
         public CarsController(CarsService carsService)
         {
