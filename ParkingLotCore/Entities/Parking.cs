@@ -155,6 +155,15 @@ namespace ParkingLotCore.Entities
             }
         }
 
+        //Transaction history for the car
+        public IEnumerable<Transaction> GetLastTransactionsForCar(uint carId, int minutes)
+        {
+            TimeSpan interval = new TimeSpan(0, minutes, 0);
+            var lastTransactionsForCar = Transactions.Where<Transaction>(t => (DateTime.Now - t.Time < interval) && (t.CardId == carId));
+
+            return lastTransactionsForCar;
+        }
+
         //The amount of earned money
         public decimal GetEarnedMoney(int minutes = 0)
         {

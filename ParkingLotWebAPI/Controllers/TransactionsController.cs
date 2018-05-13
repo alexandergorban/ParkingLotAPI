@@ -12,7 +12,7 @@ namespace ParkingLotWebAPI.Controllers
     [Route("api/transactions")]
     public class TransactionsController : Controller
     {
-        private TransactionsService _transactionsService;
+        private readonly TransactionsService _transactionsService;
 
         public TransactionsController(TransactionsService transactionsService)
         {
@@ -32,11 +32,11 @@ namespace ParkingLotWebAPI.Controllers
             return Ok(transactionFile);
         }
 
-        // GET: api/transactions/lastmin
-        [HttpGet("lastmin")]
-        public IActionResult GetLastMin()
+        // GET: api/transactions/time/1
+        [HttpGet("time/{minutes}")]
+        public IActionResult GetTransactionTime(int minute)
         {
-            var transactions = _transactionsService.GetLastMinuteTransactions();
+            var transactions = _transactionsService.GetLastTransactions(minute);
             if (transactions == null)
             {
                 return NotFound();
@@ -45,18 +45,24 @@ namespace ParkingLotWebAPI.Controllers
             return Ok(transactions);
         }
 
-        // GET: api/Transactions/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET: api/transactions/car/5/time/1
+        [HttpGet("car/{carId}/time/{minutes}/")]
+        public IActionResult GetTransactionCarTime(uint carId, int minutes)
         {
-            return "value";
+            var transactions = _transactionsService.GetLastTransactionsForCar(carId, minutes);
+            if (transactions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(transactions);
         }
 
-        // PUT: api/Transactions/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// PUT: api/Transactions/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
     }
 }

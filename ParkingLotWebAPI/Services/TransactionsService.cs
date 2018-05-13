@@ -16,12 +16,17 @@ namespace ParkingLotWebAPI.Services
         }
 
         //Last minute transactions (GET)
-        public IEnumerable<Transaction> GetLastMinuteTransactions()
+        public IEnumerable<Transaction> GetLastTransactions(int minutes)
         {
-            return CoreApp.Parking.GetLastTransactions(1);
+            return CoreApp.Parking.GetLastTransactions(minutes);
         }
 
-        //Transaction for the last minute on one particular machine(GET)
+        //Transaction for the last n-minute on one particular machine(GET)
+        public IEnumerable<Transaction> GetLastTransactionsForCar(uint carId, int minutes)
+        {
+            return CoreApp.Parking.GetLastTransactionsForCar(carId, minutes);
+        }
+
 
         //Fill the machine balance (PUT)
     }
