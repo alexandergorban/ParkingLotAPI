@@ -8,7 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 using ParkingLotCore;
+using ParkingLotCore.Entities;
+using ParkingLotWebAPI.Models;
 using ParkingLotWebAPI.Services;
 
 namespace ParkingLotWebAPI
@@ -33,7 +36,15 @@ namespace ParkingLotWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(o =>
+                {
+                    if (o.SerializerSettings.ContractResolver != null)
+                    {
+                        var castedResolver = o.SerializerSettings.ContractResolver as DefaultContractResolver;
+                        castedResolver.NamingStrategy = null;
+                    }
+                });
 
             services.AddScoped<CarsService>();
             services.AddScoped<ParkingService>();
@@ -47,6 +58,13 @@ namespace ParkingLotWebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStatusCodePages();
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Car, CarDto>();
+            });
 
             app.UseMvc();
         }
