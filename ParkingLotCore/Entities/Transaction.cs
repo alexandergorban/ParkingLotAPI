@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkingLotCore.Entities
 {
-    class Transaction
+    public class Transaction
     {
         public DateTime Time { get; private set; }
         public uint CardId { get; private set; }

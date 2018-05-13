@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkingLotCore.Entities
 {
-    class Car
+    public class Car
     {
         public uint Id { get; private set; }
         public decimal Balance { get; private set; }

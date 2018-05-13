@@ -8,7 +8,7 @@ using ParkingLotCore.Entities;
 
 namespace ParkingLotCore.Services
 {
-    class FileWriter
+    public class FileWriter
     {
         // Set interval for logging (1 min)
         private TimeSpan interval = new TimeSpan(0, 1, 0);
@@ -16,7 +16,7 @@ namespace ParkingLotCore.Services
         public void LogTransactionToFile(object obj)
         {
             var lastTransactionsForWrite =
-                Settings.Parking.Transactions.Where<Transaction>(t => DateTime.Now - t.Time < interval);
+                CoreApp.Parking.Transactions.Where<Transaction>(t => DateTime.Now - t.Time < interval);
 
             using (StreamWriter sw = new StreamWriter("Transactions.log", true, System.Text.Encoding.Default))
             {

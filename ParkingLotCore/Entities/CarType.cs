@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkingLotCore.Entities
 {
-    enum CarType
+    public enum CarType
     {
         Passenger,
         Truck,

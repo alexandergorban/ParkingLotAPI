@@ -8,7 +8,7 @@ using ParkingLotCore.Entities;
 
 namespace ParkingLotCore.Services
 {
-    class ParkingService
+    public class ParkingService
     {
         private Timer _logToFile;
         private Timer _withdrawMoney;
@@ -22,8 +22,8 @@ namespace ParkingLotCore.Services
             FileWriter = new FileWriter();
             FileReader = new FileReader();
 
-            _logToFile = new Timer(new TimerCallback(FileWriter.LogTransactionToFile), null, Settings.intervalForLoggingToFile, Settings.intervalForLoggingToFile);
-            _withdrawMoney = new Timer(new TimerCallback(Settings.Parking.WithdrawMoneyForCars), null, Settings.intervalForWithdrawMoney, Settings.intervalForWithdrawMoney);
+            _logToFile = new Timer(new TimerCallback(FileWriter.LogTransactionToFile), null, CoreApp.intervalForLoggingToFile, CoreApp.intervalForLoggingToFile);
+            _withdrawMoney = new Timer(new TimerCallback(CoreApp.Parking.WithdrawMoneyForCars), null, CoreApp.intervalForWithdrawMoney, CoreApp.intervalForWithdrawMoney);
         }
     }
 }

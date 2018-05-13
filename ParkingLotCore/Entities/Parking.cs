@@ -8,12 +8,12 @@ using ParkingLotCore.Exceptions;
 
 namespace ParkingLotCore.Entities
 {
-    class Parking
+    public class Parking
     {
         private static readonly Lazy<Parking> LazyParking = new Lazy<Parking>(() => new Parking());
         public static Parking Instance => LazyParking.Value;
 
-        public uint NumberParkingSpaces { get; set; } = Settings.ParkingSpace;
+        public uint NumberParkingSpaces { get; set; } = CoreApp.ParkingSpace;
         public List<Car> Cars { get; }
         public List<Transaction> Transactions { get; }
         public decimal Balance { get; set; }
@@ -92,7 +92,7 @@ namespace ParkingLotCore.Entities
         {
             foreach (Car car in Cars)
             {
-                decimal sum = Settings.Dictionary[car.Type];
+                decimal sum = CoreApp.Dictionary[car.Type];
 
                 if (car.Balance > 0 && (car.Balance - sum) > 0)
                 {
@@ -102,7 +102,7 @@ namespace ParkingLotCore.Entities
                 }
                 else
                 {
-                    sum *= Convert.ToDecimal(Settings.Fine); //todo
+                    sum *= Convert.ToDecimal(CoreApp.Fine); //todo
                     car.DecreaseBalance(sum);
                 }
             }

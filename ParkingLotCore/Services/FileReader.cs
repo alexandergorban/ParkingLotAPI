@@ -8,7 +8,7 @@ using ParkingLotCore.Entities;
 
 namespace ParkingLotCore.Services
 {
-    class FileReader
+    public class FileReader
     {
         public string ReadTransactionFromFile()
         {
