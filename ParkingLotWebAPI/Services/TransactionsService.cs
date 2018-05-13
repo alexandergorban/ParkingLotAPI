@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ParkingLotCore;
+using ParkingLotCore.Entities;
 
 namespace ParkingLotWebAPI.Services
 {
     public class TransactionsService
     {
-        public CoreApp CoreApp { get; private set; }
-
-        public TransactionsService()
+        //View Transactions.log (GET)
+        public string GetTransactionsFile()
         {
-            CoreApp = CoreApp.Instance;
+            return CoreApp.ParkingService.FileReader.ReadTransactionFromFile();
         }
 
-        //View Transactions.log (GET)
-
-        //Last minute transaction (GET)
+        //Last minute transactions (GET)
+        public IEnumerable<Transaction> GetLastMinuteTransactions()
+        {
+            return CoreApp.Parking.GetLastTransactions(1);
+        }
 
         //Transaction for the last minute on one particular machine(GET)
 

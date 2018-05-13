@@ -4,18 +4,45 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingLotWebAPI.Services;
 
 namespace ParkingLotWebAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Transactions")]
+    [Route("api/transactions")]
     public class TransactionsController : Controller
     {
-        // GET: api/Transactions
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private TransactionsService _transactionsService;
+
+        public TransactionsController(TransactionsService transactionsService)
         {
-            return new string[] { "value1", "value2" };
+            _transactionsService = transactionsService;
+        }
+
+        // GET: api/transactions/file
+        [HttpGet("file")]
+        public IActionResult Get()
+        {
+            string transactionFile = _transactionsService.GetTransactionsFile();
+            if (transactionFile == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(transactionFile);
+        }
+
+        // GET: api/transactions/lastmin
+        [HttpGet("lastmin")]
+        public IActionResult GetLastMin()
+        {
+            var transactions = _transactionsService.GetLastMinuteTransactions();
+            if (transactions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(transactions);
         }
 
         // GET: api/Transactions/5
@@ -24,23 +51,12 @@ namespace ParkingLotWebAPI.Controllers
         {
             return "value";
         }
-        
-        // POST: api/Transactions
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-        
+
         // PUT: api/Transactions/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
     }
 }
