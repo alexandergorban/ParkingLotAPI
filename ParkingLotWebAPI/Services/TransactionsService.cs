@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ParkingLotCore;
 using ParkingLotCore.Entities;
+using ParkingLotWebAPI.Models;
 
 namespace ParkingLotWebAPI.Services
 {
@@ -27,7 +29,21 @@ namespace ParkingLotWebAPI.Services
             return CoreApp.Parking.GetLastTransactionsForCar(carId, minutes);
         }
 
-
         //Fill the machine balance (PUT)
+        public bool IncreaseCarBalance(BalanceDto balanceDto)
+        {
+            if (IsCarExist(balanceDto.Id))
+            {
+                CoreApp.Parking.IncreaseCarBalance(balanceDto.Id, balanceDto.Balance);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsCarExist(uint carId)
+        {
+            return CoreApp.Parking.IsCarExist(carId);
+        }
     }
 }
