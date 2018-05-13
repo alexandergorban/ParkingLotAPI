@@ -4,43 +4,61 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingLotWebAPI.Services;
 
 namespace ParkingLotWebAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Cars")]
+    [Route("api/cars")]
     public class CarsController : Controller
     {
-        // GET: api/Cars
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private CarsService _carsService;
+
+        public CarsController(CarsService carsService)
         {
-            return new string[] { "value1", "value2" };
+            _carsService = carsService;
         }
 
-        // GET: api/Cars/5
+        // GET: api/cars
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var cars = _carsService.GetParkedCars();
+            if (cars == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(cars);
+        }
+
+        // GET: api/cars/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public IActionResult Get(uint id)
         {
-            return "value";
+            var car = _carsService.GetCar(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(car);
         }
-        
-        // POST: api/Cars
+
+        // POST: api/cars
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]string value)
         {
+
+            return Ok();
         }
-        
-        // PUT: api/Cars/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Guid id)
         {
+
+            return Ok();
         }
     }
 }

@@ -24,6 +24,11 @@ namespace ParkingLotCore.Entities
             Transactions = new List<Transaction>();
         }
 
+        public Car GetCar(uint carId)
+        {
+            return Cars.First<Car>(c => c.Id == carId);
+        }
+
         public void AddCar(Car car)
         {
             try
