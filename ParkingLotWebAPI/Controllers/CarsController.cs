@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingLotCore.Entities;
+using ParkingLotWebAPI.Models;
 using ParkingLotWebAPI.Services;
 
 namespace ParkingLotWebAPI.Controllers
@@ -52,10 +54,16 @@ namespace ParkingLotWebAPI.Controllers
 
         // POST: api/cars
         [HttpPost]
-        public IActionResult Post([FromBody]string value)
+        public IActionResult Post([FromBody] CarDto carDto)
         {
+            if (carDto == null)
+            {
+                return BadRequest();
+            }
 
-            return Ok();
+            var car =_carsService.AddCar(carDto);
+
+            return CreatedAtRoute("Get", car);
         }
 
         // DELETE: api/cars/5

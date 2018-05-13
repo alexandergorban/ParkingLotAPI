@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ParkingLotCore;
 using ParkingLotCore.Entities;
+using ParkingLotWebAPI.Models;
 
 namespace ParkingLotWebAPI.Services
 {
@@ -27,10 +29,12 @@ namespace ParkingLotWebAPI.Services
         }
 
         //Add a car (POST)
-        public Car AddCar(Guid carId)
+        public Car AddCar(CarDto carDto)
         {
+            var car = Mapper.Map<Car>(carDto);
+            CoreApp.Parking.AddCar(car);
 
-            return null;
+            return car;
         }
 
         public bool IsCarExist(uint carId)
